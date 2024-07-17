@@ -1,0 +1,27 @@
+numberList=["This is your list:"]
+x=1
+numberP = float(input("Choose a positive number less than 100 "))
+if (numberP > 99 or numberP < 1):
+    print("That doesn't work")
+else:
+    numberList.append(numberP)
+    x=x+1
+numberP = float(input("Choose another positive number less than 100 "))
+if (numberP > 99 or numberP < 1):
+    print("That doesn't work")
+else:
+    numberList.append(numberP)
+    x=x+1
+numberP = float(input("Choose another positive number less than 100 "))
+if (numberP > 99 or numberP < 1):
+    print("That doesn't work")
+else:
+    numberList.append(numberP)
+    x=x+1
+print(numberList[0])
+if (x > 1):
+    print(numberList[1])
+if (x > 2):
+    print(numberList[2])
+if (x > 3):
+    print(numberList[3])

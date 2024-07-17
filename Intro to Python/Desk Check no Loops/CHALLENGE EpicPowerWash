@@ -1,0 +1,66 @@
+newList = []
+try:
+    pInput = int(input("Hello, please input some data or whatever, though I only want integers between 0 and 4 (inclusive). "))
+    if (pInput < 5 and pInput > -1):
+        print("That worked!")
+        newList.append(pInput)
+except:
+    print("That didn't work, so I'll ask again.")
+try:
+    pInput = int(input("Please input some data that fits the criteria, I only want integers between 0 and 4 (inclusive). "))
+    if (pInput <= 4 and pInput >= 0):
+        print("That worked!")
+        newList.append(pInput)
+except:
+    print("That didn't work, so I'll ask again.")
+try:
+    pInput = int(input("Please input some data that fits the criteria, I only want integers between 0 and 4 (inclusive). "))
+    if (pInput <= 4 and pInput >= 0):
+        print("That worked!")
+        newList.append(pInput)
+except:
+    print("That didn't work, so I'll ask again.")
+try:
+    pInput = int(input("Please input some data that fits the criteria, I only want integers between 0 and 4 (inclusive). "))
+    if (pInput <= 4 and pInput >= 0):
+        print("That worked!")
+        newList.append(pInput)
+except:
+    print("That didn't work, so I'll ask again.")
+try:
+    pInput = int(input("Please input some data that fits the criteria, I only want integers between 0 and 4 (inclusive). "))
+    if (pInput <= 4 and pInput >= 0):
+        print("That worked!")
+        newList.append(pInput)
+except:
+    print("That didn't work, you ran out of attempts")
+print("This is the list of your integers given that fit the criteria:")
+try:
+    print(newList[0])
+    newList.pop(0)
+except:
+    pass
+try:
+    print(newList[0])
+    newList.pop(0)
+except:
+    pass
+
+try:
+    print(newList[0])
+    newList.pop(0)
+except:
+    pass
+
+try:
+    print(newList[0])
+    newList.pop(0)
+except:
+    pass
+
+try:
+    print(newList[0])
+    newList.pop(0)
+except:
+    pass
+

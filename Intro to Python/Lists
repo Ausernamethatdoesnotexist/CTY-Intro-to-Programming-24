@@ -1,0 +1,7 @@
+print("List your top 5 foods!")
+podium=["This is your list:"]
+for x in range (5):
+    x=x+1
+    podium.append(input(f"What is the number {x} spot on your list? "))
+for x in podium:
+    podium.pop

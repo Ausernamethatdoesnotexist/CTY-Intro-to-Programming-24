@@ -1,0 +1,8 @@
+numberList = [0, 15, 32, 44, 1, 23, 11]
+sum += numberList[0]
+sum += numberList[1]
+sum += numberList[2]
+sum += numberList[3]
+sum += numberList[4]
+sum += numberList[5]
+print(sum)

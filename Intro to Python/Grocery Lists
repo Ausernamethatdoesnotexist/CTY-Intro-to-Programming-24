@@ -1,0 +1,9 @@
+groceryList=["Congraulations! You created a grocery list.",""]
+groceryNumber = int(input("How many things would you like to add to your grocery list? "))
+for x in range (groceryNumber):
+    x=x+1
+    groceryList.append(input(f"What is number {x} in your grocery list? "))
+groceryList.append("")
+for y in range (groceryNumber+2):
+    print(groceryList[y])
+    

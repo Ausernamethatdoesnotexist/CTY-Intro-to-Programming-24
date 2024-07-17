@@ -1,0 +1,10 @@
+pNumber=float(input("Choose an integer"))
+numList=[]
+if (pNumber < 0):
+    print("You're not allowed to use negatives :(")
+else:
+    if (pNumber%2 == 0):
+        numList.append(pNumber)
+        print(numList)
+    else:
+        pass

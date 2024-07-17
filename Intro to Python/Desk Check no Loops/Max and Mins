@@ -1,0 +1,42 @@
+#For the sake of this, as it should have "a list of known size", the example will be a list of 10
+whateverThisListIs=[1,45,332,5254,435,18,36,74,345,98]
+max=whateverThisListIs[0]
+if (whateverThisListIs[1]>max):
+    max=whateverThisListIs[1]
+if (whateverThisListIs[2]>max):
+    max=whateverThisListIs[2]
+if (whateverThisListIs[3]>max):
+    max=whateverThisListIs[3]
+if (whateverThisListIs[4]>max):
+    max=whateverThisListIs[4]
+if (whateverThisListIs[5]>max):
+    max=whateverThisListIs[5]
+if (whateverThisListIs[6]>max):
+    max=whateverThisListIs[6]
+if (whateverThisListIs[7]>max):
+    max=whateverThisListIs[7]
+if (whateverThisListIs[8]>max):
+    max=whateverThisListIs[8]
+if (whateverThisListIs[9]>max):
+    max=whateverThisListIs[9]
+min=whateverThisListIs[0]
+if (whateverThisListIs[1]<min):
+    min=whateverThisListIs[1]
+if (whateverThisListIs[2]<min):
+    min=whateverThisListIs[2]
+if (whateverThisListIs[3]<min):
+    min=whateverThisListIs[3]
+if (whateverThisListIs[4]<min):
+    min=whateverThisListIs[4]
+if (whateverThisListIs[5]<min):
+    min=whateverThisListIs[5]
+if (whateverThisListIs[6]<min):
+    min=whateverThisListIs[6]
+if (whateverThisListIs[7]<min):
+    min=whateverThisListIs[7]
+if (whateverThisListIs[8]<min):
+    min=whateverThisListIs[8]
+if (whateverThisListIs[9]<min):
+    min=whateverThisListIs[9]
+print(f"The maximum of this list is {max}.")
+print(f"The minimum of this list is {min}.")
