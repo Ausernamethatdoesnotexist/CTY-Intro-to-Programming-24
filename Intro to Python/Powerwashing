@@ -1,0 +1,13 @@
+def pressureWasherRange (lowerbound, upperbound):
+    works=False
+    while (works==False):
+        try:
+            pInput=float(str(input(f"Give me a natural number from {lowerbound} to {upperbound}. ")))
+            if (int(pInput)==pInput):
+                pInput = int(pInput)
+        except:
+            print("That is not a number. Try again.")
+        if (pInput>=lowerbound and pInput<upperbound):
+            works=True
+    return pInput
+        

@@ -1,0 +1,23 @@
+myList=[1,"af",15,-99,"1000",14.9,-0.3]
+def myFunction(theList):
+    for i in range (len(theList)):
+        try:
+            min=float(theList[i])
+            max=min
+            break
+        except:
+            pass
+    for i in range (len(theList)):
+        try:
+            if max<float(theList[i]):
+                max=float(theList[i])
+            if min>float(theList[i]):
+                min=float(theList[i])
+        except:
+            pass
+    if (int(max)==max):
+        max=int(max)
+    if (int(min)==min):
+        min=int(min)
+    print(f"The minimum is {min}.\nThe maximum is {max}.")
+myFunction(myList)

@@ -1,0 +1,22 @@
+def primeFunc():
+    works=False
+    while (works==False):
+        try:
+            pInput=float(str(input(f"Give me a number to check if it's prime. ")))
+            if (int(pInput)==pInput):
+                pInput = int(pInput)
+                if (pInput>1):
+                    works=True
+                elif (pInput==0 or pInput==1):
+                    print("That is either 0 or 1, which both do not count, so try again. ")
+                else:
+                    print("That's negative, which doesn't work, so try again.")
+            else:
+                print("That's a decimal, which can't be prime, so try again.")
+        except:
+            print("That is not a number. Try again.")
+    for i in range (2,pInput//2,1):
+        if  (pInput/i==pInput//i):
+            print(f"{pInput} is a prime number.")
+        else:
+            print(f"{pInput} is not a prime number.")

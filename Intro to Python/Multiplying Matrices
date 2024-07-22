@@ -1,0 +1,32 @@
+matrix1=[]
+matrix2=[]
+matrix3=[]
+works=False
+while (works==False):
+    try:
+        width1height2=int(input("How many columns in your first matrix and rows in your last matrix would you like? "))
+        height1=int(input("How many rows would you like in your first matrix? "))
+        width2=int(input("How many columns would you like to have in your second matrix? "))
+        
+        for i in range (height1):
+            matrix1.append([])
+            matrix3.append([])
+            for k in range(width1height2):
+                matrix1[i].append(int(input(f"What is the value number {k+1} on row {i+1} that you'd like to input on matrix 1? ")))
+        for i in range(width2):
+            matrix2.append([])
+            for k in range (width1height2):
+                matrix2[i].append(int(input(f"What is the value number {k+1} on row {i+1} that you'd like to input on matrix 2? ")))
+        works=True
+    except:
+        print("You messed something up, so try again. ")
+for i in range(height1):
+    sumOfRow=0
+    for k in range(width1height2):
+        for j in range(width2):
+            sumOfRow = sumOfRow + int(matrix1[i][k]*matrix2[j][k])
+    matrix3[i].append(sumOfRow)
+for i in range(height1):
+    for k in range(width2):
+        print(matrix3[i][k],end=" ")
+    print(" ")

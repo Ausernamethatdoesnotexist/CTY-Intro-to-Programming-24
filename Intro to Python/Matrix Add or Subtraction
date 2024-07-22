@@ -1,0 +1,51 @@
+works = False
+matrix1=[]
+matrix2=[]
+matrixFinal=[]
+while (works==False):
+    try:
+        operation=input("Choose addition or subtraction for the matrices, capitalized with no extra stuff. ")
+        if (operation=="Subtraction" or operation=="Addition"):
+            pass
+        else:
+            print("You did not type it correctly. Sorry.")
+            KeyboardInterrupt
+        height=int(input("Choose a natural number to make the height of the matrices. " ))
+        width=int(input("Choose a natural number to make the width of the matrices. "))
+        for i in range(height):
+            matrix1.append([])
+            matrix2.append([])
+            for k in range (width):
+                matrix1[i].append(" ")
+                matrix2[i].append(" ")
+            if (operation!="Multiplication"):
+                for k in range (height):
+                    matrixFinal[i].append(" ")
+        for i in range (height):
+            for k in range (width):
+                j=i+1
+                x=k+1
+                matrix1[i][k]=float(input(f"Choose a value for value number {x} on row {j} on the first matrix. "))
+        for i in range (height):
+            for k in range (width):
+                j=i+1
+                x=k+1
+                matrix2[i][k]=float(input(f"Choose a value for value number {x} on row {j} on the second matrix. "))
+        if (matrix1 != []):
+            works=True
+    except:
+        print("That input didn't work, so please try again.")
+for i in range (height):
+    for k in range (width):
+        if (operation=="Subtraction"):
+            matrixFinal[i][k]=matrix1[i][k]-matrix2[i][k]
+        elif (operation=="Addition"):
+            matrixFinal[i][k]=matrix1[i][k]+matrix2[i][k]
+for i in range(height):
+    for k in range (width):
+        if (int(matrixFinal[i][k])==matrixFinal[i][k] ):
+            matrixFinal[i][k]=int(matrixFinal[i][k])
+for i in range(height):
+    for k in range (width):
+        print(matrixFinal[i][k],end=" ")
+    print(" ")
