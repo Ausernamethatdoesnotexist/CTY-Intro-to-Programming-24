@@ -1,0 +1,19 @@
+matrice1=[[3,3],[4,5]]
+matrice2=[[2,7],[8,5]]
+matrice=[]
+works=False
+while (works==False):
+    try:
+        pInputWidth=int(input("What is the width of your matrix"))
+        pInputHeight=int(input("What is the height of your matrix"))
+        for i in range (len(pInputHeight)):
+            matrice.append([])
+            for k in range(len(pInputWidth)):
+                
+for i in range (len(matrice)):
+    for k in range (len(matrice)):
+        matrice[i][k]=matrice1[i][k]+matrice2[i][k]
+for i in range(len(matrice)):
+    for k in range(len(matrice[i])):
+        print(matrice[i][k],end=" ")
+    print(" ")

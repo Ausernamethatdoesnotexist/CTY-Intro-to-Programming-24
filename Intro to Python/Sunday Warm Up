@@ -1,0 +1,14 @@
+while(1==1):
+    myVar=0
+    while (myVar==0):
+        try:
+            pInput=float(input("Choose a positive integer you'd want to take the factorial of. "))
+            if (pInput>int(pInput) and pInput<(int(pInput))+1):
+                print("That is a float (decimal), which is not accepted, try again.")
+            else:
+                myVar=1
+        except:
+            print("That doesn't work, please try again.")
+    for i in range (1,int(pInput)+1,1):
+        myVar=myVar*i
+    print(f"The factorial of the number you inputted is {myVar}. \n\n\nNow do it again.")
