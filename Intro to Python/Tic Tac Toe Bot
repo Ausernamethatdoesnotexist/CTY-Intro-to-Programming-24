@@ -1,0 +1,149 @@
+import copy
+def printGrid(gameBoard):
+    for i in range (len(gameBoard)):
+        for k in range (len(gameBoard[i])):
+            print(gameBoard[i][k],end=" ")
+        print(" ")
+def time(turns,win):
+    turns+=1
+    if (turns==9 and win==False):
+        printGrid
+        print("This game is a tie")
+        return "True"
+    else:
+        return turns
+def checkWin(gameBoard,win):
+    for i in range(0,5,2):
+        if ((gameBoard[i][0]==gameBoard[i][2] and gameBoard[i][4]==gameBoard[i][2]) or (gameBoard[0][i]==gameBoard[2][i] and gameBoard[4][i]==gameBoard[2][i])):
+            win=True
+    if ((gameBoard[0][0]==gameBoard[2][2] and gameBoard[0][0] == [4][4])or(gameBoard[0][4]==gameBoard[2][2] and gameBoard[2][2]==gameBoard[4][4])):
+        win=True
+    return win
+def playerTurn (lowerbound, upperbound,playerNum,playerSymb,gameBoard,win):
+    works=False
+    printGrid(gameBoard)
+    while (works==False):
+        try:
+            pInput=float(str(input(f"Hello Player {playerNum}! \nGive me a natural number from {lowerbound} to {upperbound-1}. ")))
+            if (int(pInput)==pInput):
+                pInput = int(pInput)
+        except:
+            print("That is not a number. Try again.")
+        if (pInput>=lowerbound and pInput<upperbound):
+            lowerbound=0
+        while (lowerbound!=1):
+            gameBoardCheck=copy.deepcopy(gameBoard)
+            for i in range(0,5,2):
+                try:
+                    gameBoard[i][gameBoard[i].index(pInput)]=playerSymb
+                    lowerbound=1
+                    works=True
+                    break
+                except:
+                    pass
+            if (gameBoardCheck==gameBoard):
+                print("You chose a number that had been taken already, try again. ")
+                break
+    if (checkWin(gameBoard,win)==True):
+        print(f"The player using {playerSymb} won the game! ")
+        return True
+    else:
+        return gameBoard
+
+
+
+works=False
+win=False
+checkFull=0
+went=False
+turns=0
+print("For this game, it will say which player's turn it is, and you have to type the corresponding number on the board.")
+gameBoard=[[1,"┃",2,"┃",3],["-","┃","-","┃","-"],[4,"┃",5,"┃",6],["-","┃","-","┃","-"],[7,"┃",8,"┃",9]]
+while (works==False):
+    try:
+        numOfPlayers=float(str(input("Give the number of players ")))
+        if (int(numOfPlayers)==numOfPlayers):
+            numOfPlayers = int(numOfPlayers)
+        else:
+            print("Give me a NATURAL NUMBER!!! ")
+    except:
+        print("That is not a number. Try again.")
+    if (numOfPlayers>=1 and numOfPlayers<=2):
+        works=True
+    else:
+        print("That is out of range")
+while (win==False):
+    pTurn=playerTurn(1,10,1,"X",gameBoard,win)
+    if (pTurn==True):
+        win=pTurn
+    else:
+        gameBoard=pTurn
+    if (time(turns,win)=="True"):
+        win="Tie"
+    else:
+        turns=time(turns,win)
+    if (win==False and numOfPlayers==2):
+        pTurn=playerTurn(1,10,2,"0",gameBoard,win)
+        if (pTurn==True):
+            win=pTurn
+        else:
+            gameBoard=pTurn
+        if (time(turns,win)==True):
+            win=True
+        else:
+            turns=time(turns,win)
+    else:
+        for i in range(1,10,1):
+            for k in range (0,5,2):
+                winCheck=copy.deepcopy(gameBoard)
+                try:
+                    winCheck[k][winCheck[k].index(i)]="0"
+                    if (checkWin(winCheck,win)==True and win!=True):
+                        win=True
+                        gameBoard=copy.deepcopy(winCheck)
+                except:
+                    pass
+        for i in range(1,10,1):
+            for k in range (0,5,2):
+                winCheck=copy.deepcopy(gameBoard)
+                try:
+                    winCheck[k][winCheck[k].index(i)]="X"
+                    if(checkWin(winCheck,win)==True and win!=True and went!=True):
+                        gameBoard[k][gameBoard[k].index(i)]="0"
+                        went=True
+                except:
+                    pass
+        if(gameBoard==[[1,"┃",2,"┃",3],["-","┃","-","┃","-"],[4,"┃","X","┃",6],["-","┃","-","┃","-"],[7,"┃",8,"┃",9]] and win!=True and went!=True):
+            gameBoard[0][0]="0"
+        elif(gameBoard[2][2]==5 and win!=True and went!=True):
+            gameBoard[2][2]="0"
+        elif(gameBoard[2][2]=="0" and ((gameBoard[0][0]=="X"and gameBoard[4][4]=="X")or(gameBoard[0][4]=="X" and gameBoard[4][0]=="X"))and turns==3):
+            gameBoard[0][2]="0"
+            went=True
+        elif(went!=True and win!=True):
+            for i in range (0,5,4):
+                for k in range (0,5,4):
+                    if ((gameBoard[i][k]!="0" and gameBoard[i][k]!="X")and went!=True and win!=True):
+                        gameBoard[i][k]="0"
+                        went=True
+                    elif(i==4 and k==4 and went!=True):
+                        for x in range(1,10,1):
+                            for y in range(0,5,2):
+                                try:
+                                    if(gameBoard[y][gameBoard[y].index(x)]!=("X" or "0") and went!=True):
+                                        gameBoard[y][gameBoard[y].index(x)]="0"
+                                        went=True
+                                except:
+                                    pass
+        went=False
+        if (time(turns,win)==True):
+            win=True
+        else:
+            turns=time(turns,win)
+    if (checkWin(gameBoard,win)==True):
+        for x in range (len(winCheck)):
+            for y in range (len(winCheck[x])):
+                print(winCheck[x][y],end=" ")
+            print(" ")
+        print("The game has been won. ")
+        win=True

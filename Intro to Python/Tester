@@ -1,0 +1,64 @@
+import copy
+win=False
+print("For this game, it will say which player's turn it is, and you have to type the corresponding number on the board.")
+gameBoard=[[1,"┃",2,"┃",3],["-","┃","-","┃","-"],[4,"┃",5,"┃",6],["-","┃","-","┃","-"],[7,"┃",8,"┃",9]]
+def printGrid(gameBoard):
+    for i in range (len(gameBoard)):
+        for k in range (len(gameBoard[i])):
+            print(gameBoard[i][k],end=" ")
+        print(" ")
+def checkWin(gameBoard,win):
+    for i in range(0,5,2):
+        if ((gameBoard[i][0]==gameBoard[i][2] and gameBoard[i][4]==gameBoard[i][2]) or (gameBoard[0][i]==gameBoard[2][i] and gameBoard[4][i]==gameBoard[2][i])):
+            win=gameBoard[i][0]
+    if ((gameBoard[0][0]==gameBoard[2][2] and gameBoard[0][0] == [4][4])or(gameBoard[0][4]==gameBoard[2][2] and gameBoard[2][2]==gameBoard[4][4])):
+        win=gameBoard[2][2]
+    if (win=="X"):
+        print("Player 1 won the game.")
+        return True
+    elif (win=="0"):
+        print("Player 2 won the game.")
+        return True
+    else:
+        return False
+def playerTurn (lowerbound, upperbound,playerNum,playerSymb,gameBoard,win):
+    works=False
+    printGrid(gameBoard)
+    while (works==False):
+        try:
+            pInput=float(str(input(f"Hello Player {playerNum}! \nGive me a natural number from {lowerbound} to {upperbound-1}. ")))
+            if (int(pInput)==pInput):
+                pInput = int(pInput)
+        except:
+            print("That is not a number. Try again.")
+        if (pInput>=lowerbound and pInput<upperbound):
+            lowerbound=0
+        while (lowerbound!=1):
+            gameBoardCheck=copy.deepcopy(gameBoard)
+            for i in range(0,5,2):
+                try:
+                    gameBoard[i][gameBoard[i].index(pInput)]=playerSymb
+                    lowerbound=1
+                    works=True
+                    break
+                except:
+                    pass
+            if (gameBoardCheck==gameBoard):
+                print("You chose a number that had been taken already, try again. ")
+                break
+    if (checkWin(gameBoard,win)==True):
+        return True
+    else:
+        return gameBoard
+while (win==False):
+    pTurn=playerTurn(1,10,1,"X",gameBoard,win)
+    if (pTurn==True):
+        win=pTurn
+    else:
+        gameBoard=pTurn
+    if (win==False):
+        pTurn=playerTurn(1,10,2,"0",gameBoard,win)
+        if (pTurn==True):
+            win=pTurn
+        else:
+            gameBoard=pTurn
