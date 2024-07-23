@@ -18,5 +18,8 @@ def primeFunc():
     for i in range (2,pInput//2,1):
         if  (pInput/i==pInput//i):
             print(f"{pInput} is a prime number.")
-        else:
-            print(f"{pInput} is not a prime number.")
+            works=True
+    if (works==False):
+        print(f"{pInput} is not a prime number.")
+        works=True
+primeFunc()
