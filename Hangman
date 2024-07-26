@@ -1,0 +1,127 @@
+import random
+import copy
+def printGuy(messUps):
+    h=" "
+    a1=h
+    a2=h
+    a3=h
+    a4=h
+    b1=h
+    b2=h
+    l1=h
+    l2=h
+    if (messUps>=1):
+        h="O"
+        if (messUps>=2):
+            b1="┃"
+            if (messUps>=3):
+                a2="/"
+                if (messUps>=4):
+                    a3="\\"
+                    if (messUps>=5):
+                        a1="\\"
+                        if (messUps>=6):
+                            a4="/"
+                            if (messUps>=7):
+                                b2="┃"
+                                if (messUps>=8):
+                                    l1="/"
+                                    if (messUps>=9):
+                                        l2="\\"
+                                        if (messUps>=10):
+                                            h="X"
+    print(f'''
+＿＿＿＿＿＿
+┃  /     ┃
+┃ /      {h}
+┃/     {a1}{a2}{b1}{a3}{a4}
+┃        {b2}
+┃       {l1} {l2}
+┃         
+┃＿＿＿＿＿＿
+    ''')
+def winCheck(pGuess,secretWord,gameBoardTXT):
+    boardCheck=copy.deepcopy(gameBoardTXT)
+    for i in range(len(secretWord)):
+        if (pGuess==secretWord[i]):
+            boardCheck[i]=pGuess
+    if (boardCheck==gameBoardTXT):
+        return False
+    else:
+        return boardCheck
+def printPast(theGameBoardTXT,usedLetters,wrong):
+    print("Letters that Failed:")
+    for i in usedLetters:
+        print(i,end=" ")
+    printGuy(wrong)
+    for i in range(len(theGameBoardTXT)):
+        print(theGameBoardTXT[i],end=" ")
+def guess(failureLetter):
+    works=False
+    while (works==False):
+        letterList=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",]
+        pLetter=input(f" \n\nPlease insert a letter. \n\n You are trying to guess the word before you make 10 mistakes. \n When you guess a letter, it will check and reveal the spots that have that letter. \nThe hanging man shows how many mistakes you've made.\n\nInsert Letter Here --->").upper()
+        for i in letterList:
+            if (i.upper() != pLetter):
+                if(letterList=="z"):
+                    print("Just give me a letter please :(")
+            elif((len(pLetter)==1)and i.upper()==pLetter):
+                works=True
+            else:
+                print("One character please.")
+        for i in failureLetter:
+            if (i==pLetter):
+                print("You've also already guessed this and it didn't work, so I'd SUGGEST trying again.\n")
+                works=False
+    return pLetter
+redo=True
+while (redo==True):
+    win=False
+    wrongAns=0
+    lettersGuessed=[]
+    works=False
+    while (works==False):
+        ask=input("Would you like the easy mode:\nThe entire dictionary\n\n     or\n\nThe hard mode:\nA list of very hard words\nType hard or easy---> ").upper()
+        if (ask=="HARD"):
+            theList=["abruptly","absurd","abyss","affix","askew","avenue","awkward","axiom","azure","bagpipes","bandwagon","banjo","bayou","beekeeper","blitz","blizzard","boggle","bookworm","boxcar","boxful","buckaroo","buffalo","buffoon","buzzard","buzzing","caliph","cobweb","cockiness","croquet","crypt","cycle","disavow","dizzying","duplex","dwarves","embezzle","equip","espionage","exodus","faking","fishhook","fixable","fjord","flapjack","flopping","fluffiness","flyby","frazzled","fuchsia","funny","gabby","galaxy","galvanize","gazebo","gizmo","glyph","gnarly","gossip","grogginess","haiku","haphazard","hyphen","icebox","injury","ivory","ivy","jackpot","jawbreaker","jaywalk","jazziest","jazzy","jelly","jigsaw","jinx","jockey","jogging","jovial","juicy","jukebox","jumbo","kayak","kazoo","keyhole","khaki","kilobyte","kiosk","kitsch","klutz","knapsack","lengths","lucky","luxury","lymph","matrix","microwave","mnemonic","mystify","nowadays","nymph","onyx","oxidize","oxygen","pajama","peekaboo","phlegm","pixel","pizazz","pneumonia","polka","psyche","puppy","puzzling","quartz","queue","quips","quiz","rhubarb","rhythm","scratch","shiv","snazzy","sphinx","spritz","squawk","staff","strengths","stretch","stronghold","subway","swivel","syndrome","thumbscrew","topaz","transcript","transgress","transplant","twelfth","unknown","unworthy","uptown","vaporize","voodoo","vortex","walkway","waltz","wave","wavy","waxy","wellspring","wheezy","whiskey","whizzing","whomever","wimpy","witchcraft","wizard","woozy","wristwatch","wyvern","xylophone","yachtsman","yippee","yoked","youthful","yummy","zephyr","zigzagging","zilch","zipper","zodiac","zombie","vision","loiterer","observatory","century","Atlantis","kilogram","neutron","stowaway","psychologist","exponential","aristocrat","eureka","parody","cartography","figment","philosopher","tinting","overture","opaque","Everglades","ironic","zero","landfill","implode","czar","armada","crisp","stockholder","inquisition","mooch","gallop","archaeologist","blacksmith","addendum","upgrade","hang","ten","acre","twang","mine","car","protestant","brunette","stout","quarantine","tutor","positive","champion","pastry","tournament","onomatopoeia","rainwater","random","lyrics","ice","fishing","clue","flutter","slump","ligament","siesta","pomp"]
+            hiddenWord=theList[random.randint(0,len(theList)-1)].upper()
+            works=True
+        elif(ask=="EASY"):
+            listFile=open("HangmanFolder/DictionaryFile.txt")
+            listFileContent=listFile.readlines()
+            hiddenWord=(listFileContent[random.randint(0,(len(listFileContent)-1))].upper())[:-1]
+            works=True
+        else:
+            print("Just follow the directions and don't add anything else please.")
+    wordLen=len(hiddenWord)
+    board=[]
+    for i in range(wordLen):
+        board.append("_")
+    while (wrongAns<10):
+        printPast(board,lettersGuessed,wrongAns)
+        letterInput=guess(lettersGuessed)
+        if (winCheck(letterInput,hiddenWord,board)==False):
+            wrongAns+=1
+            lettersGuessed.append(letterInput.upper())
+        else:
+            board=winCheck(letterInput,hiddenWord,board)
+        try:
+            board.index("_")
+        except:
+            win=True
+        if (win==True):
+            break
+    if (win!=True):
+        print(f'The real answer was {hiddenWord}.')
+    else:
+        print(f"Good job! You won this game of hangman with {wrongAns} mistakes!\nThe correct answer was {hiddenWord}.")
+    while (win==True):
+        redo=input("Would you like to play another game? Yes or no? ").upper()
+        if (redo=="YES"):
+            redo=True
+            break
+        elif(redo=="NO"):
+            redo=False
+            break
+        else:
+            print("Just type yes or no please, no extra things.")
