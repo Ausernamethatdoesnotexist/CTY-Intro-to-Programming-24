@@ -1,0 +1,249 @@
+import copy
+def winCheck(symBoard,pNum,yes):
+    for i in symBoard:
+        for k in range(3):
+            if(i[k]==i[k+1]==i[k+2]==i[k+3]and(i[k]!="   ")):
+                if(yes==True):
+                    print (f"Player {pNum} has won the game!")
+                return True
+    for i in range(7):
+        for k in range(3):
+            if((symBoard[k][i]==symBoard[k+1][i]==symBoard[k+2][i]==symBoard[k+3][i])and(symBoard[k][i]!="   ")):
+                if(yes==True):
+                    print (f"Player {pNum} has won the game!")
+                return True
+    for i in range (3):
+        for k in range (4):
+            if((symBoard[i][k]==symBoard[i+1][k+1]==symBoard[i+2][k+2]==symBoard[i+3][k+3])and(symBoard[i][k]!="   ")):
+                if(yes==True):
+                    print (f"Player {pNum} has won the game!")
+                return True
+    for i in range (5,2,-1):
+        for k in range (4):
+            if((symBoard[i][k]==symBoard[i-1][k+1]==symBoard[i-2][k+2]==symBoard[i-3][k+3])and(symBoard[i][k]!="   ")):
+                if(yes==True):
+                    print (f"Player {pNum} has won the game!")
+                return True
+    for i in range(7):
+        if (symBoard[0][i]=="   "):
+            break
+        if (i==6):
+            if(yes==True):
+                print("This game is a tie.")
+            return True
+    return False
+def gravity(column,boardText,playNum):
+    for i in range (5,-1,-1):
+        if(playNum==1):
+            if(boardText[i][column]=="   "):
+                boardText[i][column]=" ● "
+                break
+        if(playNum!=1):
+            if(boardText[i][column]=="   "):
+                boardText[i][column]=" ○ "
+                break
+def getInput(boardTXT,playerNum):
+    works=False
+    while(works==False):
+        try:
+            col=float(str(input(f"Player {playerNum}, what column would you like to place it in? There are only 7 columns. ---> ")))-1
+            if (col>6 or col<0):
+                print("That number is out of range.")
+            elif (int(col)!=col):
+                print("That is a float, not an integer.")
+            elif (boardTXT[0][int(col)]!="   "):
+                print("That column is full!")
+            else:
+                col=int(col)
+                works=True
+        except:
+            print("That is not a valid value.")
+    gravity(col,boardTXT,playerNum)
+def printBoard(onlyTextBoard,wholeBoard):
+    finalPrintBoard=copy.deepcopy(wholeBoard)
+    for i in range (6):
+        finalPrintBoard[i*2]=copy.deepcopy(onlyTextBoard[i])
+    print("＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿")
+    for i in range(len(finalPrintBoard)):
+        finalPrintBoard[i].insert(0,"││")
+        finalPrintBoard[i].append("│")
+    for i in range(len(finalPrintBoard)):
+        for k in range(len(finalPrintBoard[i])):
+            print(finalPrintBoard[i][k],end="│")
+        print(" ")  
+    print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+redo=True
+while(redo==True):
+    playerNumber=0
+    emptyBoard=[[],[" - "," - "," - "," - "," - "," - "," - "],[],[" - "," - "," - "," - "," - "," - "," - "],[],[" - "," - "," - "," - "," - "," - "," - "],[],[" - "," - "," - "," - "," - "," - "," - "],[],[" - "," - "," - "," - "," - "," - "," - "],[]]
+    onlyLetterBoard=[["   ","   ","   ","   ","   ","   ","   "],["   ","   ","   ","   ","   ","   ","   "],["   ","   ","   ","   ","   ","   ","   "],["   ","   ","   ","   ","   ","   ","   "],["   ","   ","   ","   ","   ","   ","   "],["   ","   ","   ","   ","   ","   ","   "]]
+    priorityBoard=[[0,2,4,6,5,3,1],[7,10,11,15,12,9,8],[14,16,21,22,20,17,13],[19,24,33,35,34,23,18],[25,26,37,40,36,28,27],[30,31,39,41,38,32,29]]
+    print("Player 1 is using ●\nPlayer 2 is using ○")
+    works=False
+    while (works==False):
+        try:
+            numOfPlayers=float(str(input("Would you like 1 or 2 players? You would be player 1 if there is a bot. ")))
+            if(int(numOfPlayers)!=numOfPlayers):
+                print("That is a float, not a natural number.")
+            elif(numOfPlayers>2 or numOfPlayers<1):
+                print("That number is out of range.")
+            else:
+                works=True
+                numOfPlayers=int(numOfPlayers)
+        except:
+            print("Put a natural number please.")
+    works=False
+    '''
+    while(works==False):
+        try:
+            orderOfPlayers=float(str(input("Would you like to be player 1 or 2? ")))
+            if(int(orderOfPlayers)!=numOfPlayers):
+                print("That is a float, not a natural number.")
+            elif(orderOfPlayers>2 or numOfPlayers<1):
+                print("That number is out of range")
+            else:
+                works=True
+                orderOfPlayers=int(orderOfPlayers)
+        except:
+            print("Put a natural number please.")
+    '''
+    while (winCheck(onlyLetterBoard,playerNumber,True)==False):
+        playerNumber=(playerNumber+1)%2
+        if (playerNumber==0):
+            playerNumber+=2
+        printBoard(onlyLetterBoard,emptyBoard)
+        if(playerNumber==2 and numOfPlayers==1):
+            highestNum=-1
+            highestCombo=[-1,-1]
+            posMoveNumbs=[[11,11],[11,11],[11,11],[11,11],[11,11],[11,11],[11,11]]
+            went=False
+            possibleMoves=[0,1,2,3,4,5,6]
+            for i in range(7):
+                checkBoard=copy.deepcopy(onlyLetterBoard)
+                if((checkBoard[0][i]=="   ")and(went==False)):
+                    gravity(i,checkBoard,2)
+                    if(winCheck(checkBoard,playerNumber,False)==True):
+                        gravity(i,onlyLetterBoard,2)
+                        went=True
+            for i in range(7):
+                checkBoard=copy.deepcopy(onlyLetterBoard)
+                if((checkBoard[0][i]=="   ")and(went==False)):
+                    gravity(i,checkBoard,1)
+                    if(winCheck(checkBoard,playerNumber,False)==True):
+                        gravity(i,onlyLetterBoard,2)
+                        went=True
+            for i in range(7):
+                for k in range(7):
+                    checkBoard=copy.deepcopy(onlyLetterBoard)
+                    gravity(i,checkBoard,1)
+                    gravity(k,checkBoard,1)
+                    if((winCheck(checkBoard,1,False)==True)and went!=True):
+                        checkBoard=copy.deepcopy(onlyLetterBoard)
+                        checkBoard2=copy.deepcopy(onlyLetterBoard)
+                        gravity(i,checkBoard,1)
+                        gravity(k,checkBoard,2)
+                        gravity(i,checkBoard2,2)
+                        gravity(k,checkBoard2,1)
+                        if(winCheck(checkBoard,2,False)==False and winCheck(checkBoard2,2,False)==False):
+                            gravity(k,onlyLetterBoard,2)
+                            went=True
+                        elif(winCheck(checkBoard2,2,False)==True):
+                            possibleMoves.remove(i)
+                            break
+                        elif(winCheck(checkBoard,2,False)):
+                            gravity(k,onlyLetterBoard,2)
+                            went=True
+            for i in range(7):
+                for k in range(7):
+                    checkBoard=copy.deepcopy(onlyLetterBoard)
+                    gravity(i,checkBoard,2)
+                    gravity(k,checkBoard,2)
+                    if((winCheck(checkBoard,playerNumber,False)==True)and (went!=True)and(possibleMoves.count(i)!=0)):
+                        gravity(i,onlyLetterBoard,2)
+                        went=True
+                        break
+            for i in range(5,2,-1):
+                for k in range(4):
+                    if((onlyLetterBoard[i][k]==onlyLetterBoard[i-3][k+3]=="   ")and(onlyLetterBoard[i-1][k+1]==onlyLetterBoard[i-2][k+2]==" ● ")and(went!=True)):
+                        if(possibleMoves.count(k)!=0 and went!=True):
+                            gravity(k,onlyLetterBoard,2)
+                            went=True
+                        if(possibleMoves.count(k+3)!=0 and went!=True):
+                            gravity(k+3,onlyLetterBoard,2)
+                            went=True
+            for i in range(5,2,-1):
+                for k in range(6,2,-1):
+                    if((onlyLetterBoard[i][k]==onlyLetterBoard[i-3][k-3]=="   ")and(onlyLetterBoard[i-1][k-1]==onlyLetterBoard[i-2][k-2]==" ● ")and(went!=True)):
+                        if(possibleMoves.count(k)!=0 and went!=True):
+                            gravity(k,onlyLetterBoard,2)
+                            went=True
+                        if(possibleMoves.count(k+3)!=0 and went!=True):
+                            gravity(k+3,onlyLetterBoard,2)
+                            went=True
+            for i in range(5,-1,-1):
+                for k in range(4):
+                    if((onlyLetterBoard[i][k]==onlyLetterBoard[i][k+3]=="   ")and(onlyLetterBoard[i][k+1]==onlyLetterBoard[i][k+2]==" ● ")and(went!=True)):
+                        if(possibleMoves.count(k)!=0 and went!=True):
+                            gravity(k,onlyLetterBoard,2)
+                            went=True
+                        if(possibleMoves.count(k+3)!=0 and went!=True):
+                            gravity(k+3,onlyLetterBoard,2)
+                            went=True
+            checked=False
+            for i in range(7):
+                for k in range(7):
+                    for j in range(7):
+                        checkBoard=copy.deepcopy(onlyLetterBoard)
+                        gravity(i,checkBoard,1)
+                        gravity(k,checkBoard,1)
+                        gravity(j,checkBoard,1)
+                        if((winCheck(checkBoard,1,False)==True)and went!=True and checked==False and possibleMoves.count(i)!=0):
+                            possibleMoves.remove(i)
+                            checked=True
+            for i in range(7):
+                for k in range(5,-1,-1):
+                    if(onlyLetterBoard[k][i]=="   " and (possibleMoves.count(i)!=0)):
+                        posMoveNumbs[i][0]=k
+                        posMoveNumbs[i][1]=i
+                        break
+            for i in range(7):
+                if(posMoveNumbs[i][0]!=11 and (possibleMoves.count(i)!=0)):
+                    if(priorityBoard[posMoveNumbs[i][0]][posMoveNumbs[i][1]]>highestNum):
+                        highestNum=priorityBoard[posMoveNumbs[i][0]][posMoveNumbs[i][1]]
+                        highestCombo[0]=posMoveNumbs[i][0]
+                        highestCombo[1]=posMoveNumbs[i][1]
+            if(went!=True and highestCombo[1]!=-1):
+                gravity(highestCombo[1],onlyLetterBoard,2)
+                went=True
+            highestNum=-1
+            highestCombo=[-1,-1]
+            posMoveNumbs=[[11,11],[11,11],[11,11],[11,11],[11,11],[11,11],[11,11]]
+            for i in range(7):
+                for k in range(5,-1,-1):
+                    if(onlyLetterBoard[k][i]=="   "):
+                        posMoveNumbs[i][0]=k
+                        posMoveNumbs[i][1]=i
+                        break
+            for i in range(7):
+                if(posMoveNumbs[i][0]!=11):
+                    if(priorityBoard[posMoveNumbs[i][0]][posMoveNumbs[i][1]]>highestNum):
+                        highestNum=priorityBoard[posMoveNumbs[i][0]][posMoveNumbs[i][1]]
+                        highestCombo[0]=posMoveNumbs[i][0]
+                        highestCombo[1]=posMoveNumbs[i][1]
+            if(went!=True):
+                gravity(highestCombo[1],onlyLetterBoard,2)
+                went=True
+        else:
+            getInput(onlyLetterBoard,playerNumber)
+    printBoard(onlyLetterBoard,emptyBoard)
+    while (redo==True):
+        redo=input("Would you like to play another game? Yes or No? ").upper()
+        if (redo=="YES"):
+            redo=True
+            break
+        elif(redo=="NO"):
+            redo=False
+            break
+        else:
+            print('Just type "yes" or "no" please, no extra things.')
+            redo=True
