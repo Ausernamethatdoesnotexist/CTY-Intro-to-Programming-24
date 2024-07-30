@@ -1,1 +1,4 @@
 The highscore is:
+999
+By:
+Bob
