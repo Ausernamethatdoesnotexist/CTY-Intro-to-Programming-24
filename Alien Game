@@ -1,0 +1,152 @@
+import random
+redo=True
+while (redo==True): 
+    highScoreContent=[]
+    print("Welcome to the Alien Game!\n\nThe point of this is to survive, but you have to manage your resources.\nYour speed controls how many aliens catch up to you, but you lose fuel, and if you lose all of your fuel, they all catch up to you.\nRest and hydration are just things you have to take care of, if you don't have enough, then you are less efective, and eventually, you'll fail.\nShip level determines how much the damage is mitigated, but damage taken will impact your durability.\nHINT: After destroying aliens, you can slow down to collect their fuel\n\nTLDR; Manage your resources\n")
+    with open("/Users/ctyc01printing/Applications/CTY-Intro-to-Programming-24-1/Intro to Python/Week 2/AlienHighScore.txt",'r') as file:
+        for line in file: 
+            print(line)
+            line = line.strip()
+            highScoreContent.append(line)
+    highScoreContent[1]=int(highScoreContent[1])
+    hydration=80
+    rest=80
+    numAlien=random.randint(50,75)
+    shipDurability=80
+    shipLevel=150
+    fuel=50
+    speed=1
+    score=0
+    roundNum=0
+    done=False
+    pInput=0
+    killCount=0
+    checkFuel=0
+    while(done==False):
+        works=False
+        print(f"\nHydration: {hydration}\nRest: {rest}\nShip Durability: {shipDurability}\nShip Level: {shipLevel}\nFuel: {fuel}\nSpeed: {speed}\nAliens Alive: {numAlien}\nRounds Survived: {roundNum}\nScore: {score}\n")
+        while(works==False):
+            if(pInput=="A"):
+                pInput=input("\nA. Shoot at the aliens.\nB. Drink from your wattle bottle.\nC. Rest \nD. Stop (Doesn't take a turn)\nE. Go at moderate speed.\nF. Speed up to full speed\nG. Ship Repair\nH. Upgrade Ship\nI. Quit\nZ. HARVEST FUEL FROM ALIENS(Limited Time)\n---> ").upper()
+                if pInput not in ("A","B","C","D","E","F","E","G","H","Z"):
+                    print("Please only put the letter of your choice.")
+                else:
+                    works=True
+            else:
+                pInput=input("\nA. Shoot at the aliens.\nB. Drink from your wattle bottle.\nC. Rest \nD. Stop (Doesn't take a turn)\nE. Go at moderate speed.\nF. Speed up to full speed\nG. Ship Repair\nH. Upgrade Ship\nI. Quit\n---> ").upper()
+                if pInput not in ("A","B","C","D","E","F","E","G","H"):
+                    print("Please only put the letter of your choice.")
+                else:
+                    works=True
+            if(pInput=="I"):
+                check=(input("Are you sure you'd like to quit this game? Yes or No? ")).upper()
+                if(check=="YES"):
+                    done=True
+                elif(check=="NO"):
+                    print("Okay, you may choose an option again.")
+                    works=False
+                else:
+                    print("That answer wasn't recognized, please try again.")
+                    works=False
+            if(pInput=="D"):
+                speed=1
+                works=False
+        roundNum+=1
+        if(pInput=="A"):
+            killCount=numAlien
+            if(hydration<20):
+                print("\nYou're dehyrdated.")
+                numAlien=round(numAlien*random.randint(30,50)/100)
+            elif(hydration>=20 and hydration<=40):
+                print("\nYou're sort of thirsty.")
+                numAlien=round(numAlien*random.randint(40,60)/100)
+            else:
+                numAlien=round(numAlien*random.randint(40,70)/100)
+            if(rest<30):
+                numAlien=numAlien-5
+                print("\nYou're feeling a little tired.")
+            killCount=killCount-numAlien
+            hydration=hydration-random.randint(10,20)
+            print(f"\nYou destroyed {killCount} alien ships!\nThere are {numAlien} left.")
+        elif(pInput=="B"):
+            hydration+=random.randint(40,50)
+            print(f"\nYour hydration level is {hydration}")
+            if(hydration>100):
+                hydration=80
+                print("\nYou got overhydrated and threw up, you are back down to 80 hydration.")
+        elif(pInput=="C"):
+            rest=rest+round((100-rest)/2)
+            if (rest<90):
+                rest=rest+10
+                print(f"\nYou are {rest}% rested.")
+            else:
+                rest=100
+                print("\nYou are fully rested!")
+        elif(pInput=="E"):
+            speed=random.randint(40,60)
+            print(f"\nYou are at {speed} speed.")
+            hydration=hydration-2
+        elif(pInput=="F"):
+            speed=random.randint(85,100)
+            print(f"\nYou are at {speed} speed.")
+            hydration=hydration-3
+            hydration=hydration-random.randint(6,12)
+        elif(pInput=="G"):
+            shipDurability=round(shipDurability+((100-shipDurability)/2))
+            if (shipDurability<90):
+                shipDurability=shipDurability+10
+                print(f"\nYour ship is at {shipDurability}% durability.")
+            else:
+                shipDurability=100
+                print("\nYour ship is pristine!")
+            hydration=hydration-random.randint(10,15)
+        elif(pInput=="H"):
+            shipLevel=round((shipLevel+10)*1.1)
+            hydration=hydration-random.randint(10,15)
+            print(f"\nYour ship is at level {shipLevel}")
+        elif(pInput=="Z"):
+            checkFuel=fuel
+            fuel=fuel+round((random.randint(40,60))*(killCount**(1/2)))
+            speed=10
+            print(f"\nYou scavenged {fuel-checkFuel} fuel charges.")
+            hydration=hydration-random.randint(10,20)
+        shipDurabilityCheck=shipDurability
+        shipDurability=shipDurability-round(numAlien*random.randint(5,7)/shipLevel)
+        print(f"\nYou've taken {shipDurabilityCheck-shipDurability} damage!\nYou are now at {shipDurability}% durability.")
+        numAlien=numAlien+round((roundNum**2)*4/(speed))
+        rest=rest-random.randint(5,10)
+        fuel=fuel-speed
+        if(fuel<0):
+            fuel=0
+        if (fuel<=0):
+            print("You're out of fuel and they caught up to you")
+            numAlien+=random.randint(100000,999999)
+        if((hydration<=0)or(rest<=0)or(shipDurability<=0)):
+            done=True
+            if(hydration<=0):
+                print("You're a mummy now, I guess you should've drunk more.\n")
+            elif(rest<=0):
+                print("Should've slept more, it's not like you're being chased after constantly.\n")
+            else:
+                print("\nBOOM\n\nBoom\n\nBOOM\n\nShip go bye bye\n")
+        else:
+            score=int(score+roundNum*50+killCount+shipLevel//2+hydration+rest+fuel-checkFuel)
+    print(f"Your Score:\n{score}")
+    if(score>highScoreContent[1]):
+        uInput=input("You have the new highscore!\nWhat name would you like to leave with the new highscore? ")
+        highScore=open("/Users/ctyc01printing/Applications/CTY-Intro-to-Programming-24-1/Intro to Python/Week 2/AlienHighScore.txt","w")
+        highScore.write("The highscore is:\n")
+        highScore=open("/Users/ctyc01printing/Applications/CTY-Intro-to-Programming-24-1/Intro to Python/Week 2/AlienHighScore.txt","a")
+        highScore.write(f"{score}\nBy:\n{uInput}\n")
+    else:
+        print(f"The current highscore is {highScoreContent[1]}")
+    while (True):
+        redo=input("Would you like to play another game? Yes or no? ").upper()
+        if (redo=="YES"):
+            redo=True
+            break
+        elif(redo=="NO"):
+            redo=False
+            break
+        else:
+            print("That input is not accepted.")
