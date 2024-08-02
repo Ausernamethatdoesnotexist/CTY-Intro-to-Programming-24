@@ -1,16 +1,27 @@
 import copy
-import random
 def printMap(theMap):
     for i in range (len(myMap)):
         for k in range (len(myMap[i])):
             print(myMap[i][k],end="")
         print(" ")
 redo=True
-mapCollection=[[[" "," ","█","█","█","█","█"," "],["█","█","█"," "," "," ","█"," "],["█","◯","◆","□"," "," ","█"," "],["█","█","█"," ","□","◯","█"," "],["█","◯","█","█","□"," ","█"," "],["█"," ","█"," ","◯"," ","█","█"],["█","□"," ","⧇","□","□","◯","█"],["█"," "," "," ","◯"," "," ","█"],["█","█","█","█","█","█","█","█"]],[["█","□","█","█","█","█","█"],["█","□"," ","□","◆","◯","█"],["□","□"," "," ","█"," ","█"],["█","□","█"," ","█","◯","█"],["█"," ","□"," ","█","□","█"],["█","◯","█"," "," ","□","□"],["█","█","█","█","█","█","█"]]]
+mapCollection=[[[" "," ","█","█","█","█","█"," "],["█","█","█"," "," "," ","█"," "],["█","◯","◆","□"," "," ","█"," "],["█","█","█"," ","□","◯","█"," "],["█","◯","█","█","□"," ","█"," "],["█"," ","█"," ","◯"," ","█","█"],["█","□"," ","⧇","□","□","◯","█"],["█"," "," "," ","◯"," "," ","█"],["█","█","█","█","█","█","█","█"]],[["█","□","█","█","█","█","█"],["█","□"," ","□","◆","◯","█"],["□","□"," "," ","█"," ","█"],["█","□","█"," ","█","◯","█"],["█"," ","□"," ","█","□","█"],["█","◯","█"," "," ","□","□"],["█","█","█","█","█","█","█"]],[["◆","□","◯","█"," ","□","█"],["□","□"," ","█","□","□","█"],["◯","█"," ","□","□","□","□"],["█","□","◯"," ","█","□","□"],["█","□"," ","█","█","█","□"],["□","□","□","□","□","□","□"]]]
 while (redo==True):
     print("\nThe point of this game is to cover up all pressure plates with squares by moving them\n\n█ is an immovable block\n□ is a movable block\n◯ is a pressure plate\n⧇ is a movable block with a pressure plate underneath\n◆ is the player\n⟐ is the player on top of a pressure plate\n\nPlease don't softlock yourself")
     win=False
-    myMap=copy.deepcopy(mapCollection[random.randint(0,(len(mapCollection)-1))])
+    while(True):
+        try:
+            mapNum=float(str(input(f"There are {len(mapCollection)} maps to choose from, which one do you want? ")))-1
+            if(int(mapNum)==mapNum):
+                mapNum=int(mapNum)
+            elif(mapNum+1<len(mapCollection) and mapNum>-1):
+                pass
+            else:
+                KeyboardInterrupt
+            break
+        except:
+            print("Put a natural number that is inside of the range please.")
+    myMap=copy.deepcopy(mapCollection[mapNum])
     checkMap=copy.deepcopy(myMap)
     printMap(myMap)
     surrender=False
@@ -40,12 +51,19 @@ while (redo==True):
             if (myMap[i].count("◆")!=0 and checkBoardMove==myMap):
                 pColumn=myMap[i].index("◆")
                 if(pInput=="W"):
+                    if(i==0):
+                        print("Don't throw yourself off the edge now.")
+                        works=False
+                        break
                     checked=False
                     for x in range (len(myMap)):
                         try:
                             if(checked==False):
                                 if (myMap[i-x-1][pColumn]!="□"):
                                     checked=True
+                                    if(i-x-1<0):
+                                        checked=False
+                                        break
                         except IndexError:
                             break
                     if (checked==False):
@@ -63,12 +81,19 @@ while (redo==True):
                             myMap[i-j][pColumn]=myMap[i-j+1][pColumn]
                         myMap[i][pColumn]=" "
                 if(pInput=="S"):
+                    if(i==(len(myMap)-1)):
+                        print("Don't throw yourself off the edge now.")
+                        works=False
+                        break
                     checked=False
                     for x in range (len(myMap)):
                         try:
                             if(checked==False):
                                 if (myMap[i+x+1][pColumn]!="□"):
                                     checked=True
+                                    if(i+x+1>len(myMap)):
+                                        checked=False
+                                        break
                         except IndexError:
                             break
                     if (checked==False):
@@ -86,12 +111,19 @@ while (redo==True):
                             myMap[i+j][pColumn]=myMap[i+j-1][pColumn]
                         myMap[i][pColumn]=" "
                 if(pInput=="A"):
+                    if(pColumn==0):
+                        print("Don't throw yourself off the edge now.")
+                        works=False
+                        break
                     checked=False
                     for x in range (len(myMap[0])):
                         try:
                             if(checked==False):
                                 if (myMap[i][pColumn-x-1]!="□"):
                                     checked=True
+                                    if(pColumn-x-1<0):
+                                        checked=False
+                                        break
                         except:
                             break
                     if (checked==False):
@@ -109,12 +141,19 @@ while (redo==True):
                             myMap[i][pColumn-j]=myMap[i][pColumn-j+1]
                         myMap[i][pColumn]=" "
                 if(pInput=="D"):
+                    if(pColumn==(len(myMap[i])-1)):
+                        print("Don't throw yourself off the edge now.")
+                        works=False
+                        break
                     checked=False
                     for x in range (len(myMap[0])):
                         try:
                             if(checked==False):
                                 if (myMap[i][pColumn+x+1]!="□"):
                                     checked=True
+                                    if(pColumn+x+1>len(myMap[i])):
+                                        checked=False
+                                        break
                         except IndexError:
                             break
                     if (checked==False):
