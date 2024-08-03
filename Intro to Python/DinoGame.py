@@ -7,7 +7,7 @@ def printMap(theMap):
 redo=True
 mapCollection=[[[" "," ","█","█","█","█","█"," "],["█","█","█"," "," "," ","█"," "],["█","◯","◆","□"," "," ","█"," "],["█","█","█"," ","□","◯","█"," "],["█","◯","█","█","□"," ","█"," "],["█"," ","█"," ","◯"," ","█","█"],["█","□"," ","⧇","□","□","◯","█"],["█"," "," "," ","◯"," "," ","█"],["█","█","█","█","█","█","█","█"]],[["█","□","█","█","█","█","█"],["█","□"," ","□","◆","◯","█"],["□","□"," "," ","█"," ","█"],["█","□","█"," ","█","◯","█"],["█"," ","□"," ","█","□","█"],["█","◯","█"," "," ","□","□"],["█","█","█","█","█","█","█"]],[["◆","□","◯","█"," ","□","█"],["□","□"," ","█","□","□","█"],["◯","█"," ","□","□","□","□"],["█","□","◯"," ","█","□","□"],["█","□"," ","█","█","█","□"],["□","□","□","□","□","□","□"]]]
 while (redo==True):
-    print("\nThe point of this game is to cover up all pressure plates with squares by moving them\n\n█ is an immovable block\n□ is a movable block\n◯ is a pressure plate\n⧇ is a movable block with a pressure plate underneath\n◆ is the player\n⟐ is the player on top of a pressure plate\n\nPlease don't softlock yourself")
+    print("\nThe point of this game is to cover up all pressure plates with squares by moving them with WASD\n\n█ is an immovable block\n□ is a movable block\n◯ is a pressure plate\n⧇ is a movable block with a pressure plate underneath\n◆ is the player\n⟐ is the player on top of a pressure plate\n\nPlease don't softlock yourself")
     win=False
     while(True):
         try:
